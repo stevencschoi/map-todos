@@ -13,18 +13,22 @@ const server = require("http").Server(app);
 const cookieSession = require("cookie-session");
 const bcrypt = require("bcrypt");
 const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 
 app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser());
 
 // connet to mongodb
-const uri = `mongodb+srv://user:${process.env.MONGODB_PASSWORD}@maps-todo-db-ph5p2.mongodb.net/test?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true , useUnifiedTopology: true});
-client.connect(err => {
-  const collection = client.db("maps-todo-db").collection("users");
+mongoose.connect(`mongodb+srv://user:${process.env.MONGODB_PASSWORD}@maps-todo-db-ph5p2.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  client.close();
+const db = mongoose.connection;
+
+//handle mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
+  console.log("we innnn")
 });
 
 app.get("/", function (req, res) {
@@ -32,8 +36,10 @@ app.get("/", function (req, res) {
 });
 
 app.put("/register", function (req, res) {
-  const data = req.body
-  console.log(data)
+  const {username, email, password} = req.body
+  const hashedPassword = bcrypt.hashSync(password, 10);
+    // console.log("Hashed password:", hashedPassword);
+  
 });
 
 // Change the 404 message modifing the middleware
