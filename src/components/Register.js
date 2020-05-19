@@ -10,6 +10,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    passwordConf: "",
   });
 
   const [toHome, setToHome] = useState(false);
@@ -19,6 +20,7 @@ const Register = () => {
       username: "",
       email: "",
       password: "",
+      passwordConf: "",
     });
   };
 
@@ -35,7 +37,7 @@ const Register = () => {
     /* now we want to setUser from app */
     console.log("inputs:", inputs);
     axios
-      .put(`http://localhost:4000/register`, inputs)
+      .post(`http://localhost:4000/register`, inputs)
       .then(() => {
         clearInputs();
         setToHome(true);
@@ -66,6 +68,13 @@ const Register = () => {
           placeholder="Password"
           name="password"
           value={inputs.password}
+          onChange={handleInputChange}
+        />
+        <input
+          type="passwordConf"
+          placeholder="password confirmation"
+          name="passwordConf"
+          value={inputs.passwordConf}
           onChange={handleInputChange}
         />
 

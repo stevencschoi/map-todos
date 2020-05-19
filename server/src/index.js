@@ -17,34 +17,45 @@ const mongoose = require('mongoose');
 
 app.use(morgan("dev"));
 app.use(cors());
-app.use(bodyParser());
+// app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // connet to mongodb
-mongoose.connect(`mongodb+srv://user:${process.env.MONGODB_PASSWORD}@maps-todo-db-ph5p2.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
 //handle mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  // we're connected!
-  console.log("we innnn")
+  console.log("we're connectedto mongo!")
 });
 
 app.get("/", function (req, res) {
   res.send("We out here!");
 });
 
-app.put("/register", function (req, res) {
-  const {username, email, password} = req.body
-  const hashedPassword = bcrypt.hashSync(password, 10);
-    // console.log("Hashed password:", hashedPassword);
-  
-});
+// app.put("/register", function (req, res) {
+//   const { username, email, password } = req.body
+//   const hashedPassword = bcrypt.hashSync(password, 10);
+//   // console.log("Hashed password:", hashedPassword);
+
+// });
+
+const routes = require('./routes/router');
+app.use('/', routes);
 
 // Change the 404 message modifing the middleware
 app.use(function (req, res, next) {
   res.status(404).send("Page not found!)");
+});
+
+// error handler
+// define as the last app.use callback
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.send(err.message);
 });
 
 server.listen(PORT, () => {
