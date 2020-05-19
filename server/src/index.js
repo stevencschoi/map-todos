@@ -23,12 +23,17 @@ const uri = `mongodb+srv://user:${process.env.MONGODB_PASSWORD}@maps-todo-db-ph5
 const client = new MongoClient(uri, { useNewUrlParser: true , useUnifiedTopology: true});
 client.connect(err => {
   const collection = client.db("maps-todo-db").collection("users");
-  // perform actions on the collection object
+
   client.close();
 });
 
 app.get("/", function (req, res) {
   res.send("We out here!");
+});
+
+app.put("/register", function (req, res) {
+  const data = req.body
+  console.log(data)
 });
 
 // Change the 404 message modifing the middleware

@@ -35,7 +35,7 @@ const Register = () => {
     /* now we want to setUser from app */
     console.log("inputs:", inputs);
     axios
-      .put(`/register`, inputs)
+      .put(`http://localhost:4000/register`, inputs)
       .then(() => {
         clearInputs();
         setToHome(true);
