@@ -22,7 +22,7 @@ app.use(bodyParser());
 const uri = `mongodb+srv://user:${process.env.MONGODB_PASSWORD}@maps-todo-db-ph5p2.mongodb.net/test?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true , useUnifiedTopology: true});
 client.connect(err => {
-  const collection = client.db("maps-todo-db").collection("user");
+  const collection = client.db("maps-todo-db").collection("users");
   // perform actions on the collection object
   client.close();
 });
