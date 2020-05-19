@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 // import logo from './logo.svg';
-import './App.css';
-import Register from './components/Register'
+import "./App.css";
+import Register from "./components/Register";
+import TodoForm from "./components/TodoForm";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
         >
           Learn React
         </a> */}
-        <Register/>
+        <Register />
       </header>
+      <TodoForm />
     </div>
   );
 }
