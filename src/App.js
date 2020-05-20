@@ -6,17 +6,18 @@ import "./App.css";
 import Nav from "./components/Nav";
 import Register from "./components/Register";
 import TodoForm from "./components/TodoForm";
+import Button from "./components/Button";
 
 function App() {
   const logout = () => {
-    Cookies.remove('userId');
+    Cookies.remove("userId");
     axios
       .get(`http://localhost:4000/logout`)
-      .then((res) => {
-        console.log(res)
+      .then(res => {
+        console.log(res);
       })
       .catch(error => console.log(error));
-  }
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -24,9 +25,7 @@ function App() {
       </header>
       <Register />
       <TodoForm />
-      <button
-      onClick={logout}
-      >Logout</button>
+      <Button onClick={logout}>Logout</Button>
     </div>
   );
 }
