@@ -21,6 +21,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
 // connet to mongodb
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -53,10 +58,10 @@ app.use(function (req, res, next) {
 
 // error handler
 // define as the last app.use callback
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.message);
-});
+// app.use(function (err, req, res, next) {
+//   res.status(err.status || 500);
+//   res.send(err.message);
+// });
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);

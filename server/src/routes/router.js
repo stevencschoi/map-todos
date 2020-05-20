@@ -34,8 +34,10 @@ router.post('/register', function (req, res, next) {
       if (error) {
         return next(error);
       } else {
+        // console.log("THISSS", user._id)
         req.session.userId = user._id;
-        return res.redirect('/');
+        // console.log("session",req.session)
+        return res.send(user);
       }
     });
 
