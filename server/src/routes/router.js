@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 // GET route for reading data
@@ -58,14 +59,19 @@ router.post("/register", function (req, res, next) {
   }
 });
 
-// GET login route
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
   const { username, password } = req.body;
 
   User.find({ username: username })
     .then(res => {
-      console.log("res", res);
-      return res;
+      bcrypt.compare(password, res[0].password).then(result => {
+        if (result === true) {
+          req.session.userId = res[0]._id;
+          console.log("Login successful!");
+        } else {
+          console.log("Authentication failed");
+        }
+      });
     })
     .catch(err => console.error(err));
 });
@@ -99,6 +105,7 @@ router.get("/logout", function (req, res, next) {
   if (req.session) {
     // delete session object
     req.session = null;
+    console.log("req.session null now", req.session);
     return "destroy";
     // req.session.destroy(function (err) {
     //   if (err) {

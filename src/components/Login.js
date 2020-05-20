@@ -12,7 +12,8 @@ export default function Login() {
     axios
       .post(`http://localhost:4000/login`, inputs)
       .then(res => {
-        console.log(res);
+        console.log("logged in", res);
+        return res;
       })
       .catch(err => console.error(err));
   };

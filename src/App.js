@@ -24,7 +24,7 @@ function App() {
       </header>
       <Register />
       <Login />
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout()}>Logout</button>
       <TodoForm />
     </div>
   );
