@@ -79,15 +79,20 @@ router.get('/profile', function (req, res, next) {
 
 // GET for logout logout
 router.get('/logout', function (req, res, next) {
+  console.log("something", req.session)
   if (req.session) {
     // delete session object
-    req.session.destroy(function (err) {
-      if (err) {
-        return next(err);
-      } else {
-        return res.redirect('/');
-      }
-    });
+    req.session = null;
+    return "destroy";
+    // req.session.destroy(function (err) {
+    //   if (err) {
+    //     return next(err);
+    //   } else {
+    //     return "destroy";
+    //   }
+    // });
+  } else {
+    console.log("no session")
   }
 });
 
