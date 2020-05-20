@@ -1,12 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-// import logo from './logo.svg';
 import "./App.css";
 import Nav from "./components/Nav";
 import Register from "./components/Register";
 import TodoForm from "./components/TodoForm";
-import Button from "./components/Button";
+import Login from "./components/Login";
 
 function App() {
   const logout = () => {
@@ -24,8 +23,9 @@ function App() {
         <Nav />
       </header>
       <Register />
+      <Login />
+      <button onClick={logout}>Logout</button>
       <TodoForm />
-      <Button onClick={logout}>Logout</Button>
     </div>
   );
 }

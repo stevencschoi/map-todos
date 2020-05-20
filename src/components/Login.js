@@ -1,8 +1,35 @@
-import React from "react";
-import Button from "./Button";
+import React, { useState } from "react";
+import axios from "axios";
 import "../App.css";
 
 export default function Login() {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+
+  const validate = e => {
+    axios
+      .post(`http://localhost:4000/login`, inputs)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.error(err));
+  };
+
+  const handleInputChange = e => {
+    e.persist();
+    setInputs(inputs => ({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleLogin = e => {
+    e.preventDefault();
+    validate();
+  };
+
   return (
     <form className="login-form">
       <input
@@ -18,7 +45,7 @@ export default function Login() {
         value={inputs.password}
         onChange={handleInputChange}
       />
-      <Button onClick={handleLogin}></Button>
+      <button onClick={handleLogin}>Login</button>
     </form>
   );
 }

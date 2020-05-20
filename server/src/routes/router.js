@@ -1,85 +1,101 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/user');
-
+const User = require("../models/user");
 
 // GET route for reading data
-router.get('/', function (req, res, next) {
-  return res.sendFile(path.join(__dirname + '/templateLogReg/index.html'));
+router.get("/", function (req, res, next) {
+  return res.sendFile(path.join(__dirname + "/templateLogReg/index.html"));
 });
 
-
 //POST route for updating data
-router.post('/register', function (req, res, next) {
+router.post("/register", function (req, res, next) {
   // confirm that user typed same password twice
   if (req.body.password !== req.body.passwordConf) {
-    const err = new Error('Passwords do not match.');
+    const err = new Error("Passwords do not match.");
     err.status = 400;
     res.send("passwords do not match");
     return next(err);
   }
 
-  if (req.body.email &&
+  if (
+    req.body.email &&
     req.body.username &&
     req.body.password &&
-    req.body.passwordConf) {
-
+    req.body.passwordConf
+  ) {
     const userData = {
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
-    }
+    };
 
     User.create(userData, function (error, user) {
       if (error) {
         return next(error);
       } else {
-        // console.log("THISSS", user._id)
         req.session.userId = user._id;
-        // console.log("session",req.session)
         return res.send(user);
       }
     });
-
   } else if (req.body.logemail && req.body.logpassword) {
-    User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
+    User.authenticate(req.body.logemail, req.body.logpassword, function (
+      error,
+      user
+    ) {
       if (error || !user) {
-        const err = new Error('Wrong email or password.');
+        const err = new Error("Wrong email or password.");
         err.status = 401;
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect('/');
+        return res.redirect("/");
       }
     });
   } else {
-    const err = new Error('All fields required.');
+    const err = new Error("All fields required.");
     err.status = 400;
     return next(err);
   }
-})
+});
+
+// GET login route
+router.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  User.find({ username: username })
+    .then(res => {
+      console.log("res", res);
+      return res;
+    })
+    .catch(err => console.error(err));
+});
 
 // GET route after registering
-router.get('/profile', function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
+router.get("/profile", function (req, res, next) {
+  User.findById(req.session.userId).exec(function (error, user) {
+    if (error) {
+      return next(error);
+    } else {
+      if (user === null) {
+        const err = new Error("Not authorized! Go back!");
+        err.status = 400;
+        return next(err);
       } else {
-        if (user === null) {
-          const err = new Error('Not authorized! Go back!');
-          err.status = 400;
-          return next(err);
-        } else {
-          return res.send('<h1>Name: </h1>' + user.username + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>')
-        }
+        return res.send(
+          "<h1>Name: </h1>" +
+            user.username +
+            "<h2>Mail: </h2>" +
+            user.email +
+            '<br><a type="button" href="/logout">Logout</a>'
+        );
       }
-    });
+    }
+  });
 });
 
 // GET for logout logout
-router.get('/logout', function (req, res, next) {
-  console.log("something", req.session)
+router.get("/logout", function (req, res, next) {
+  console.log("something", req.session);
   if (req.session) {
     // delete session object
     req.session = null;
@@ -92,7 +108,7 @@ router.get('/logout', function (req, res, next) {
     //   }
     // });
   } else {
-    console.log("no session")
+    console.log("no session");
   }
 });
 

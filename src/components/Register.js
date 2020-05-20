@@ -4,7 +4,7 @@ import axios from "axios";
 import Button from "./Button";
 import Cookies from "js-cookie";
 
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -40,7 +40,6 @@ const Register = () => {
     axios
       .post(`http://localhost:4000/register`, inputs)
       .then(res => {
-        console.log("THISSSS", res.data._id);
         Cookies.set("userId", res.data._id);
         clearInputs();
         // setToHome(true);
@@ -75,7 +74,7 @@ const Register = () => {
         />
         <input
           type="password"
-          placeholder="password confirmation"
+          placeholder="Confirm password"
           name="passwordConf"
           value={inputs.passwordConf}
           onChange={handleInputChange}
