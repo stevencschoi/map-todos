@@ -68,8 +68,10 @@ router.post("/login", (req, res, next) => {
         if (result === true) {
           req.session.userId = res[0]._id;
           console.log("Login successful!");
+          return res[0]._id;
         } else {
           console.log("Authentication failed");
+          return "Authentication failed";
         }
       });
     })
@@ -101,7 +103,6 @@ router.get("/profile", function (req, res, next) {
 
 // GET for logout logout
 router.get("/logout", function (req, res, next) {
-  console.log("something", req.session);
   if (req.session) {
     // delete session object
     req.session = null;
