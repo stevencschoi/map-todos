@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import "./styles.5t6css";
 import axios from "axios";
 import Button from "./Button";
+import Cookies from "js-cookie"
 
 import { Redirect } from "react-router-dom";
 
@@ -10,15 +11,17 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    passwordConf: "",
   });
 
-  const [toHome, setToHome] = useState(false);
+  // const [toHome, setToHome] = useState(false);
 
   const clearInputs = () => {
     setInputs({
       username: "",
       email: "",
       password: "",
+      passwordConf: "",
     });
   };
 
@@ -33,12 +36,14 @@ const Register = () => {
   function handleSubmit(e) {
     e.preventDefault();
     /* now we want to setUser from app */
-    console.log("inputs:", inputs);
+    // console.log("inputs:", inputs);
     axios
-      .put(`http://localhost:4000/register`, inputs)
-      .then(() => {
+      .post(`http://localhost:4000/register`, inputs)
+      .then((res) => {
+        console.log("THISSSS",res.data._id)
+        Cookies.set('userId', res.data._id)
         clearInputs();
-        setToHome(true);
+        // setToHome(true);
       })
       .catch(error => console.log(error));
   }
@@ -46,7 +51,7 @@ const Register = () => {
   return (
     <>
       {/* if user registers, redirect to home page */}
-      {toHome && <Redirect to="/" />}
+      {/* {toHome && <Redirect to="/" />} */}
       <form onSubmit={handleSubmit} className="registerform">
         <input
           placeholder="username"
@@ -66,6 +71,13 @@ const Register = () => {
           placeholder="Password"
           name="password"
           value={inputs.password}
+          onChange={handleInputChange}
+        />
+        <input
+          type="passwordConf"
+          placeholder="password confirmation"
+          name="passwordConf"
+          value={inputs.passwordConf}
           onChange={handleInputChange}
         />
 
