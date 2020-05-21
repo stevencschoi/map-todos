@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 // import { Redirect } from "react-router-dom";
 
-const Register = () => {
+const Register = ({setIslogin}) => {
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -42,6 +42,7 @@ const Register = () => {
       .then(res => {
         Cookies.set("userId", res.data._id);
         clearInputs();
+        setIslogin(true)
         // setToHome(true);
       })
       .catch(error => console.log(error));

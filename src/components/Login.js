@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie"
 import "../App.css";
 
-export default function Login() {
+export default function Login({setIslogin}) {
   const [inputs, setInputs] = useState({
     logemail: "",
     logpassword: "",
@@ -15,6 +15,7 @@ export default function Login() {
       .then(res => {
         // console.log("logged in", res.data);
         Cookies.set("userId", res.data);
+        setIslogin(true)
         // return res;
       })
       .catch(err => console.error(err));
