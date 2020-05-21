@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "./Button";
 import "../App.css";
+import axios from "axios";
 
 export default function TodoForm() {
   const [text, setText] = useState("");
@@ -11,7 +12,12 @@ export default function TodoForm() {
 
   const submitTodo = e => {
     e.preventDefault();
-    console.log(text);
+    axios
+      .post(`http://localhost:4000/todos`, { text })
+      .then(res => {
+        console.log("Pushed:", res);
+      })
+      .catch(error => console.log(error));
     clearText();
   };
 
