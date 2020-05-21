@@ -50,7 +50,7 @@ router.post("/register", function (req, res, next) {
         return next(err);
       } else {
         req.session.userId = user._id;
-        return res.redirect("/");
+        return res.send(user._id);
       }
     });
   } else {
@@ -60,24 +60,38 @@ router.post("/register", function (req, res, next) {
   }
 });
 
-router.post("/login", (req, res, next) => {
-  const { username, password } = req.body;
+// router.post("/login", (req, res, next) => {
+//   const { username, password } = req.body;
 
-  User.find({ username: username })
-    .then(res => {
-      bcrypt.compare(password, res[0].password).then(result => {
-        if (result === true) {
-          req.session.userId = res[0]._id;
-          console.log("Login successful!");
-          return res[0]._id;
-        } else {
-          console.log("Authentication failed");
-          return "Authentication failed";
-        }
-      });
-    })
-    .catch(err => console.error(err));
-});
+//   User.find({ username: username })
+//     .then(async res => {
+//       const match = await bcrypt.compare(password, res[0].password, function(err , res))
+//       if (match) {
+//         console.log("Login successful!");
+//         req.session.userId = res[0]._id;
+//         return res[0]._id;
+//       } else {
+//         console.log("fucked up");
+//         const err = new Error("Authentication failed");
+//         err.status = 403;
+//         return next(err);
+//       }
+      // .then(result => {
+      //   if (result === true) {
+      //     req.session.userId = res[0]._id;
+      //     console.log("Login successful!");
+      //     next();
+      //     return res[0]._id;
+      //   } else {
+      //     const err = new Error("Authentication failed");
+      //     err.status = 403;
+      //     return next(err);
+      //   }
+      // })
+      // .catch(err => console.error(err));
+//     })
+//     .catch(err => console.error(err));
+// });
 
 // GET for logout logout
 router.get("/logout", function (req, res, next) {
@@ -101,7 +115,8 @@ router.get("/logout", function (req, res, next) {
 // GET route to show todos
 router.get("/todos", (req, res) => {
   const user_id = req.session.userId;
-  Todo.findAll({ _id: user_id })
+  console.log("userId", user_id);
+  Todo.find({ _id: user_id })
     .then(todos => {
       res.json(todos);
     })
@@ -120,9 +135,31 @@ router.post("/todos", (req, res, next) => {
 });
 
 // PUT request to edit todo
-router.put("/todos/:id", (req, res) => {});
+router.put("/todos/:id", (req, res) => { });
 
 // DELETE request to delete todo
-router.delete("/todos/:id", (req, res) => {});
+router.delete("/todos/:id", (req, res) => { });
 
 module.exports = router;
+
+
+//authenticate input against database
+// UserSchema.statics.authenticate = function (email, password, callback) {
+//   User.findOne({ email: email })
+//     .exec(function (err, user) {
+//       if (err) {
+//         return callback(err)
+//       } else if (!user) {
+//         var err = new Error('User not found.');
+//         err.status = 401;
+//         return callback(err);
+//       }
+//       bcrypt.compare(password, user.password, function (err, result) {
+//         if (result === true) {
+//           return callback(null, user);
+//         } else {
+//           return callback();
+//         }
+//       })
+//     });
+// }
