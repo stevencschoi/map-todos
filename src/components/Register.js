@@ -2,9 +2,9 @@ import React, { useState } from "react";
 // import "./styles.5t6css";
 import axios from "axios";
 import Button from "./Button";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -39,9 +39,8 @@ const Register = () => {
     // console.log("inputs:", inputs);
     axios
       .post(`http://localhost:4000/register`, inputs)
-      .then((res) => {
-        console.log("THISSSS",res.data._id)
-        Cookies.set('userId', res.data._id)
+      .then(res => {
+        Cookies.set("userId", res.data._id);
         clearInputs();
         // setToHome(true);
       })
@@ -74,8 +73,8 @@ const Register = () => {
           onChange={handleInputChange}
         />
         <input
-          type="passwordConf"
-          placeholder="password confirmation"
+          type="password"
+          placeholder="Confirm password"
           name="passwordConf"
           value={inputs.passwordConf}
           onChange={handleInputChange}
