@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const Todo = require("../models/todo");
 
 // GET route for reading data
 router.get("/", function (req, res, next) {
@@ -78,29 +79,6 @@ router.post("/login", (req, res, next) => {
     .catch(err => console.error(err));
 });
 
-// GET route after registering
-router.get("/profile", function (req, res, next) {
-  User.findById(req.session.userId).exec(function (error, user) {
-    if (error) {
-      return next(error);
-    } else {
-      if (user === null) {
-        const err = new Error("Not authorized! Go back!");
-        err.status = 400;
-        return next(err);
-      } else {
-        return res.send(
-          "<h1>Name: </h1>" +
-            user.username +
-            "<h2>Mail: </h2>" +
-            user.email +
-            '<br><a type="button" href="/logout">Logout</a>'
-        );
-      }
-    }
-  });
-});
-
 // GET for logout logout
 router.get("/logout", function (req, res, next) {
   if (req.session) {
@@ -119,5 +97,32 @@ router.get("/logout", function (req, res, next) {
     console.log("no session");
   }
 });
+
+// GET route to show todos
+router.get("/todos", (req, res) => {
+  const user_id = req.session.userId;
+  Todo.findAll({ _id: user_id })
+    .then(todos => {
+      res.json(todos);
+    })
+    .catch(error => console.error(error));
+});
+
+// POST request to add todo
+router.post("/todos", (req, res, next) => {
+  const todoData = { user_id: req.session.userId, text: req.body.text };
+  console.log(todoData);
+  Todo.create(todoData, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+  });
+});
+
+// PUT request to edit todo
+router.put("/todos/:id", (req, res) => {});
+
+// DELETE request to delete todo
+router.delete("/todos/:id", (req, res) => {});
 
 module.exports = router;
