@@ -114,9 +114,10 @@ router.get("/logout", function (req, res, next) {
 
 // GET route to show todos
 router.get("/todos", (req, res) => {
-  const user_id = req.session.userId;
-  Todo.find({ _id: user_id })
+  const user_id = req.query.user_id;
+  Todo.find({ user_id: user_id })
     .then(todos => {
+      console.log("todos:", todos);
       res.json(todos);
     })
     .catch(error => console.error(error));
@@ -125,7 +126,6 @@ router.get("/todos", (req, res) => {
 // POST request to add todo
 router.post("/todos", (req, res, next) => {
   const todoData = { user_id: req.body.user_id, text: req.body.text };
-  console.log(todoData);
   Todo.create(todoData, function (error, todo) {
     if (error) {
       return next(error);

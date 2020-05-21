@@ -12,13 +12,11 @@ export default function TodoForm() {
 
   const submitTodo = e => {
     const user_id = Cookies.get("userId");
-    console.log(user_id);
-
     e.preventDefault();
     axios
       .post(`http://localhost:4000/todos`, { user_id, text })
       .then(res => {
-        console.log("Pushed:", res);
+        console.log("Pushed");
       })
       .catch(error => console.log(error));
     clearText();

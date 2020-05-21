@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import "../App.css";
 
-export default function Login({setIslogin}) {
+export default function Login({ setIslogin }) {
   const [inputs, setInputs] = useState({
     logemail: "",
     logpassword: "",
   });
 
-  const validate = () => {
+  const validate = obj => {
     axios
-      .post(`http://localhost:4000/register`, inputs)
+      .post(`http://localhost:4000/register`, obj)
       .then(res => {
         // console.log("logged in", res.data);
         Cookies.set("userId", res.data);
-        setIslogin(true)
+        setIslogin(true);
         // return res;
       })
       .catch(err => console.error(err));
@@ -31,7 +31,7 @@ export default function Login({setIslogin}) {
 
   const handleLogin = e => {
     e.preventDefault();
-    validate();
+    validate(inputs);
   };
 
   return (
