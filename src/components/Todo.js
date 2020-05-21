@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "./Button";
 
 export default function Todo(props) {
   const deleteTodo = i => {
@@ -16,7 +15,7 @@ export default function Todo(props) {
     <div className="todo">
       <input type="checkbox" name="isComplete" onChange={toggleComplete} />
       <p>{props.text}</p>
-      <Button onClick={deleteTodo}>Delete</Button>
+      <button onClick={deleteTodo}>Delete</button>
     </div>
   );
 }

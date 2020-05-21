@@ -43,7 +43,7 @@ export default function Login({ setIslogin }) {
         onChange={handleInputChange}
       />
       <input
-        type="logpassword"
+        type="password"
         placeholder="password"
         name="logpassword"
         value={inputs.logpassword}

@@ -4,9 +4,10 @@ import Cookies from "js-cookie";
 import "./App.css";
 import Register from "./components/Register";
 import TodoForm from "./components/TodoForm";
+import Todo from "./components/Todo";
 import Login from "./components/Login";
 
-function App() {
+export default function App() {
   const [isLogin, setIslogin] = useState(Cookies.get("userId") ? true : false);
 
   const getTodos = () => {
@@ -14,7 +15,11 @@ function App() {
     axios
       .get(`http://localhost:4000/todos?user_id=${user_id}`)
       .then(res => {
-        console.log("res", res);
+        const todos = res.data.map((todo, index) => {
+          return <Todo key={index} text={todo.text} />;
+        });
+        console.log("the todos", todos);
+        return todos;
       })
       .catch(error => console.error(error));
   };
@@ -36,9 +41,7 @@ function App() {
       {!isLogin && <Login setIslogin={setIslogin} />}
       {isLogin && <button onClick={logout}>Logout</button>}
       {isLogin && <TodoForm />}
-      {isLogin && <ul className="todos">{getTodos()}</ul>}
+      {isLogin && <ul>{getTodos()}</ul>}
     </div>
   );
 }
-
-export default App;
