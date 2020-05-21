@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import "../App.css";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function TodoForm() {
   const [text, setText] = useState("");
@@ -10,12 +10,13 @@ export default function TodoForm() {
     setText("");
   };
 
-  // useState(Cookies.get('userId')
-
   const submitTodo = e => {
+    const user_id = Cookies.get("userId");
+    console.log(user_id);
+
     e.preventDefault();
     axios
-      .post(`http://localhost:4000/todos`, { text })
+      .post(`http://localhost:4000/todos`, { user_id, text })
       .then(res => {
         console.log("Pushed:", res);
       })
@@ -32,7 +33,7 @@ export default function TodoForm() {
         placeholder="What do you need to do?"
         onChange={e => setText(e.target.value)}
       />
-      <Button type="submit">Submit</Button>
+      <button type="submit">Submit</button>
     </form>
   );
 }
