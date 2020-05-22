@@ -43,7 +43,7 @@ export default function App() {
       <header className="App-header"></header>
       {!isLogin && <Register setIslogin={setIslogin} />}
       {!isLogin && <Login setIslogin={setIslogin} />}
-      {isLogin && <button onClick={logout}>Logout</button>}
+      {isLogin && <button className="logout" onClick={logout}>Logout</button>}
       {isLogin && <TodoForm />}
       {isLogin && data}
     </div>

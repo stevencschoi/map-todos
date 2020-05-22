@@ -141,12 +141,12 @@ router.delete("/todos/delete", (req, res) => {
   const { user_id, todoId } = req.query;
   const data = { user_id: req.query.user_id, todoId: req.query.todoId };
   console.log(todoId)
-  Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
-  // Todo.deleteOne(todoId, function (error, todo) {
-  //   if (error) {
-  //     return next(error);
-  //   }
-  // });
+  // Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
+  Todo.findOneAndDelete({"_id": todoId}, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+  });
   console.log("deleted")
   // return res.send("deleted")
 });
