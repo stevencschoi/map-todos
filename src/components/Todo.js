@@ -12,12 +12,14 @@ export default function Todo(props) {
   };
 
   return (
-    <div className="todo">
-      <input type="checkbox" name="isComplete" onChange={toggleComplete} />
-      <p>{props.text}</p>
-      <button className="delete" onClick={deleteTodo}>
-        Delete
-      </button>
-    </div>
+    <li>
+      <div className="todo">
+        <input type="checkbox" name="isComplete" onChange={toggleComplete} />
+        <p>{props.text}</p>
+        <button className="delete" onClick={deleteTodo}>
+          Delete
+        </button>
+      </div>
+    </li>
   );
 }
