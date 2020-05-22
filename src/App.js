@@ -9,6 +9,11 @@ import Login from "./components/Login";
 
 export default function App() {
   const [isLogin, setIslogin] = useState(Cookies.get("userId") ? true : false);
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    getTodos()
+  }, [isLogin])
 
   const getTodos = () => {
     const user_id = Cookies.get("userId");
@@ -18,8 +23,9 @@ export default function App() {
         const todos = res.data.map((todo, index) => {
           return <Todo key={index} text={todo.text} />;
         });
-        console.log("the todos", todos);
-        return todos;
+        // console.log("the todos", todos);
+        setData(todos)
+        // return todos;
       })
       .catch(error => console.error(error));
   };
@@ -41,9 +47,7 @@ export default function App() {
       {!isLogin && <Login setIslogin={setIslogin} />}
       {isLogin && <button onClick={logout}>Logout</button>}
       {isLogin && <TodoForm />}
-      {isLogin && <ul>{getTodos}</ul>}
-      <Todo text={"hello"} />
-      <Todo text={"this is a test to see how far the line goes"} />
+      {isLogin && data}
     </div>
   );
 }
