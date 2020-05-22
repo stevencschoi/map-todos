@@ -15,7 +15,9 @@ export default function Todo(props) {
     <div className="todo">
       <input type="checkbox" name="isComplete" onChange={toggleComplete} />
       <p>{props.text}</p>
-      <button onClick={deleteTodo}>Delete</button>
+      <button className="delete" onClick={deleteTodo}>
+        Delete
+      </button>
     </div>
   );
 }
