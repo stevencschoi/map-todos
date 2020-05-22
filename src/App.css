@@ -210,6 +210,7 @@ button:focus {
 ul {
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 
 li {
@@ -221,7 +222,7 @@ a {
   text-decoration: none;
 }
 
-nav ul {
+header {
   display: flex;
 }
 
@@ -237,10 +238,10 @@ li a:focus {
 
 .App {
   height: 100vh;
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: row; */
 }
 
 .registerform {
@@ -296,7 +297,8 @@ li a:focus {
 }
 
 .todo p {
-  width: 70%;
+  width: 100%;
+  margin: 1rem;
 }
 
 .delete {
@@ -312,27 +314,34 @@ li a:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .todo-form input {
-  width: 30rem;
+  width: 65%;
+  margin-right: 0.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  margin-bottom: 2rem;
 }
 
 .App-link {

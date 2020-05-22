@@ -40,12 +40,15 @@ export default function App() {
   };
   return (
     <div className="App">
-      <header className="App-header"></header>
-      {!isLogin && <Register setIslogin={setIslogin} />}
-      {!isLogin && <Login setIslogin={setIslogin} />}
-      {isLogin && <button onClick={logout}>Logout</button>}
-      {isLogin && <TodoForm />}
-      <ul>{isLogin && data}</ul>
+      <header className="App-header">
+        {!isLogin && <Register setIslogin={setIslogin} />}
+        {!isLogin && <Login setIslogin={setIslogin} />}
+        {isLogin && <button onClick={logout}>Logout</button>}
+      </header>
+      <div className="todo-container">
+        {isLogin && <TodoForm />}
+        <ul>{isLogin && data}</ul>
+      </div>
     </div>
   );
 }

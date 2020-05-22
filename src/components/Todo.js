@@ -18,8 +18,8 @@ export default function Todo(props) {
   };
 
   const toggleComplete = () => {
-    // todo[i].isComplete = !todo[i].isComplete
     console.log("toggle complete");
+    // axios.put(`http://localhost:4000/todos/update/${todoId}`);
   };
 
   return (
