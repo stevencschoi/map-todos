@@ -207,6 +207,15 @@ button:focus {
   background: #0053ba;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+}
+
 li,
 a {
   text-decoration: none;

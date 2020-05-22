@@ -3,12 +3,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function Todo(props) {
-
-  const deleteTodo = i => {
-    const todoId = props.id
+  const deleteTodo = () => {
+    const todoId = props.id;
     const user_id = Cookies.get("userId");
     axios
-      .delete(`http://localhost:4000/todos/delete?user_id=${user_id}&todoId=${todoId}`)
+      .delete(
+        `http://localhost:4000/todos/delete?user_id=${user_id}&todoId=${todoId}`
+      )
       .then(res => {
         console.log(res);
       })
@@ -16,7 +17,7 @@ export default function Todo(props) {
     console.log("delete");
   };
 
-  const toggleComplete = i => {
+  const toggleComplete = () => {
     // todo[i].isComplete = !todo[i].isComplete
     console.log("toggle complete");
   };
