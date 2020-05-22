@@ -206,6 +206,8 @@ button:hover,
 button:focus {
   background: #0053ba;
 }
+
+li,
 a {
   text-decoration: none;
 }
@@ -222,6 +224,29 @@ li a {
 li a:hover,
 li a:focus {
   color: #61dafb;
+}
+
+.todo {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.todo input {
+  width: 1rem;
+}
+
+.todo p {
+  width: 70%;
+}
+
+.delete {
+  background-color: #b80c0c;
+}
+
+.delete:hover,
+.delete:focus {
+  background: #630101;
 }
 
 .todo-form {

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const TodoSchema = new mongoose.Schema({
-  // user_id: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   text: {
     type: String,
     required: true,
@@ -17,14 +17,6 @@ const TodoSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-// // create a new todo
-// TodoSchema.methods.create = function(text) {
-//   const newTodo = { text };
-//   const todo = new this.model(newTodo);
-
-//   return todo.save();
-// }
 
 // // return all todos
 // findAll() {

@@ -76,19 +76,19 @@ router.post("/register", function (req, res, next) {
 //         err.status = 403;
 //         return next(err);
 //       }
-      // .then(result => {
-      //   if (result === true) {
-      //     req.session.userId = res[0]._id;
-      //     console.log("Login successful!");
-      //     next();
-      //     return res[0]._id;
-      //   } else {
-      //     const err = new Error("Authentication failed");
-      //     err.status = 403;
-      //     return next(err);
-      //   }
-      // })
-      // .catch(err => console.error(err));
+// .then(result => {
+//   if (result === true) {
+//     req.session.userId = res[0]._id;
+//     console.log("Login successful!");
+//     next();
+//     return res[0]._id;
+//   } else {
+//     const err = new Error("Authentication failed");
+//     err.status = 403;
+//     return next(err);
+//   }
+// })
+// .catch(err => console.error(err));
 //     })
 //     .catch(err => console.error(err));
 // });
@@ -114,10 +114,10 @@ router.get("/logout", function (req, res, next) {
 
 // GET route to show todos
 router.get("/todos", (req, res) => {
-  const user_id = req.session.userId;
-  console.log("userId", user_id);
-  Todo.find({ _id: user_id })
+  const user_id = req.query.user_id;
+  Todo.find({ user_id: user_id })
     .then(todos => {
+      console.log("todos:", todos);
       res.json(todos);
     })
     .catch(error => console.error(error));
@@ -125,8 +125,7 @@ router.get("/todos", (req, res) => {
 
 // POST request to add todo
 router.post("/todos", (req, res, next) => {
-  const todoData = { user_id: req.session.userId, text: req.body.text };
-  console.log(todoData);
+  const todoData = { user_id: req.body.user_id, text: req.body.text };
   Todo.create(todoData, function (error, todo) {
     if (error) {
       return next(error);
@@ -135,13 +134,12 @@ router.post("/todos", (req, res, next) => {
 });
 
 // PUT request to edit todo
-router.put("/todos/:id", (req, res) => { });
+router.put("/todos/:id", (req, res) => {});
 
 // DELETE request to delete todo
-router.delete("/todos/:id", (req, res) => { });
+router.delete("/todos/:id", (req, res) => {});
 
 module.exports = router;
-
 
 //authenticate input against database
 // UserSchema.statics.authenticate = function (email, password, callback) {
