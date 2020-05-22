@@ -134,10 +134,22 @@ router.post("/todos", (req, res, next) => {
 });
 
 // PUT request to edit todo
-router.put("/todos/:id", (req, res) => {});
+router.put("/todos/:id", (req, res) => { });
 
 // DELETE request to delete todo
-router.delete("/todos/:id", (req, res) => {});
+router.delete("/todos/delete", (req, res) => {
+  const { user_id, todoId } = req.query;
+  const data = { user_id: req.query.user_id, todoId: req.query.todoId };
+  console.log(todoId)
+  Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
+  // Todo.deleteOne(todoId, function (error, todo) {
+  //   if (error) {
+  //     return next(error);
+  //   }
+  // });
+  console.log("deleted")
+  // return res.send("deleted")
+});
 
 module.exports = router;
 

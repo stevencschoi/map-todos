@@ -226,6 +226,56 @@ li a:focus {
   color: #61dafb;
 }
 
+.App {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.registerform {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.registerform input {
+  padding: 0.6rem 1rem;
+  margin: 0.5rem;
+}
+
+.registerform button {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+}
+
+.registerform button:hover {
+  background-color: #0053ba;
+  cursor: pointer;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.login-form input {
+  padding: 0.6rem 1rem;
+  margin: 0.5rem;
+}
+
+.login-form button {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+}
+
+.login-form button:hover {
+  background-color: #0053ba;
+  cursor: pointer;
+}
+
 .todo {
   display: flex;
   justify-content: space-around;
