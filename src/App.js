@@ -41,7 +41,7 @@ export default function App() {
       {!isLogin && <Login setIslogin={setIslogin} />}
       {isLogin && <button onClick={logout}>Logout</button>}
       {isLogin && <TodoForm />}
-      {isLogin && <ul>{getTodos()}</ul>}
+      {isLogin && <ul>{getTodos}</ul>}
       <Todo text={"hello"} />
       <Todo text={"this is a test to see how far the line goes"} />
     </div>

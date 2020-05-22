@@ -206,6 +206,8 @@ button:hover,
 button:focus {
   background: #0053ba;
 }
+
+li,
 a {
   text-decoration: none;
 }
