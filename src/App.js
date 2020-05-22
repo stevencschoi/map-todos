@@ -20,12 +20,10 @@ export default function App() {
     axios
       .get(`http://localhost:4000/todos?user_id=${user_id}`)
       .then(res => {
-        const todos = res.data.map((todo, index) => {
-          return <Todo key={index} text={todo.text} />;
+        const todos = res.data.map((todo) => {
+          return <Todo key={todo._id} id={todo._id} text={todo.text} />;
         });
-        // console.log("the todos", todos);
         setData(todos)
-        // return todos;
       })
       .catch(error => console.error(error));
   };
