@@ -134,7 +134,15 @@ router.post("/todos", (req, res, next) => {
 });
 
 // PUT request to edit todo
-router.put("/todos/:id", (req, res) => { });
+router.put("/todos/edit", (req, res, next) => {
+  const todoData = { _id: req.body.todoId, text: req.body.todoText }
+  // console.log("DATAAAAAA",todoData)
+  Todo.updateOne({ _id: todoData._id }, {$set: {text: todoData.text}}, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+  });
+});
 
 // DELETE request to delete todo
 router.delete("/todos/delete", (req, res) => {
@@ -142,7 +150,7 @@ router.delete("/todos/delete", (req, res) => {
   const data = { user_id: req.query.user_id, todoId: req.query.todoId };
   console.log(todoId)
   // Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
-  Todo.findOneAndDelete({"_id": todoId}, function (error, todo) {
+  Todo.findOneAndDelete({ "_id": todoId }, function (error, todo) {
     if (error) {
       return next(error);
     }

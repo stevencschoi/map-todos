@@ -16,7 +16,7 @@ export default function Todo(props) {
         console.log(res);
       })
       .catch(error => console.error(error));
-    console.log("delete");
+    // console.log("delete");
   };
 
   const toggleComplete = i => {
@@ -29,8 +29,17 @@ export default function Todo(props) {
   }
 
   const handleSave = () => {
-    console.log("THISS ID", props.id)
-    console.log("THISS", text)
+    const todoId = props.id
+    const todoText = text
+    axios
+      .put(`http://localhost:4000/todos/edit`, {todoId, todoText})
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.error(error));
+    // console.log("THISS ID", props.id)
+    // console.log("THISS", text)
+    setIsedit(false)
   }
 
   return (
@@ -44,7 +53,7 @@ export default function Todo(props) {
             value={text}
             onChange={e => setText(e.target.value)}
           />}
-        {!isedit ? <button onClick={handleEdit}>Edit</button> : isedit &&
+        {!isedit ? <button onClick={handleEdit}>Edit</button> :
           <button
             onClick={handleSave}
           >Save</button>}
