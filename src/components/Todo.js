@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function Todo(props) {
+
+  const [isedit, setIsedit] = useState(false);
+  const [text, setText] = useState(props.text);
 
   const deleteTodo = i => {
     const todoId = props.id
@@ -21,11 +24,30 @@ export default function Todo(props) {
     console.log("toggle complete");
   };
 
+  const handleEdit = () => {
+    setIsedit(true)
+  }
+
+  const handleSave = () => {
+    console.log("THISS ID", props.id)
+    console.log("THISS", text)
+  }
+
   return (
     <li>
       <div className="todo">
         <input type="checkbox" name="isComplete" onChange={toggleComplete} />
-        <p>{props.text}</p>
+        {!isedit ? <p>{props.text}</p> :
+          <input
+            type="text"
+            name="text"
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />}
+        {!isedit ? <button onClick={handleEdit}>Edit</button> : isedit &&
+          <button
+            onClick={handleSave}
+          >Save</button>}
         <button className="delete" onClick={deleteTodo}>
           Delete
         </button>
