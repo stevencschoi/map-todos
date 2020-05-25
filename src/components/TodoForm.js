@@ -3,7 +3,7 @@ import "../App.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-export default function TodoForm() {
+export default function TodoForm(props) {
   const [text, setText] = useState("");
 
   const clearText = () => {
@@ -17,6 +17,7 @@ export default function TodoForm() {
       .post(`http://localhost:4000/todos`, { user_id, text })
       .then(res => {
         console.log("Pushed");
+        props.reRender()
       })
       .catch(error => console.log(error));
     clearText();

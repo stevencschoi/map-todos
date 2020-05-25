@@ -60,39 +60,6 @@ router.post("/register", function (req, res, next) {
   }
 });
 
-// router.post("/login", (req, res, next) => {
-//   const { username, password } = req.body;
-
-//   User.find({ username: username })
-//     .then(async res => {
-//       const match = await bcrypt.compare(password, res[0].password, function(err , res))
-//       if (match) {
-//         console.log("Login successful!");
-//         req.session.userId = res[0]._id;
-//         return res[0]._id;
-//       } else {
-//         console.log("fucked up");
-//         const err = new Error("Authentication failed");
-//         err.status = 403;
-//         return next(err);
-//       }
-// .then(result => {
-//   if (result === true) {
-//     req.session.userId = res[0]._id;
-//     console.log("Login successful!");
-//     next();
-//     return res[0]._id;
-//   } else {
-//     const err = new Error("Authentication failed");
-//     err.status = 403;
-//     return next(err);
-//   }
-// })
-// .catch(err => console.error(err));
-//     })
-//     .catch(err => console.error(err));
-// });
-
 // GET for logout logout
 router.get("/logout", function (req, res, next) {
   if (req.session) {
@@ -130,25 +97,45 @@ router.post("/todos", (req, res, next) => {
     if (error) {
       return next(error);
     }
+    return todo;
   });
 });
 
 // PUT request to edit todo
-router.put("/todos/:id", (req, res) => { });
+router.put("/todos/edit", (req, res, next) => {
+  const todoData = { _id: req.body.todoId, text: req.body.todoText }
+  Todo.updateOne({ _id: todoData._id }, {$set: {text: todoData.text}}, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+    return todo;
+  });
+});
+
+// PUT request to update todo
+router.put("/todos/update", (req, res, next) => {
+  const todoData = { _id: req.body.todoId, isComplete: !req.body.isComplete }
+  Todo.updateOne({ _id: todoData._id }, {$set: {isComplete: todoData.isComplete}}, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+    return todo;
+  });
+});
 
 // DELETE request to delete todo
 router.delete("/todos/delete", (req, res) => {
   const { user_id, todoId } = req.query;
   const data = { user_id: req.query.user_id, todoId: req.query.todoId };
-  console.log(todoId)
-  Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
-  // Todo.deleteOne(todoId, function (error, todo) {
-  //   if (error) {
-  //     return next(error);
-  //   }
-  // });
+  // console.log(todoId)
+  // Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
+  Todo.findOneAndDelete({ "_id": todoId }, function (error, todo) {
+    if (error) {
+      return next(error);
+    }
+    return todo;
+  });
   console.log("deleted")
-  // return res.send("deleted")
 });
 
 module.exports = router;

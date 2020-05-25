@@ -210,6 +210,7 @@ button:focus {
 li,
 a {
   text-decoration: none;
+  list-style: none;
 }
 
 nav ul {
@@ -225,13 +226,13 @@ li a:hover,
 li a:focus {
   color: #61dafb;
 }
-
+/*    */
 .App {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .registerform {
@@ -276,6 +277,19 @@ li a:focus {
   cursor: pointer;
 }
 
+.logout {
+  position: fixed;
+  top: 5%;
+  right: 10%;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.App li {
+  min-width: 75%;
+}
+/*    */
 .todo {
   display: flex;
   justify-content: space-around;
@@ -292,11 +306,14 @@ li a:focus {
 
 .delete {
   background-color: #b80c0c;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
 }
 
 .delete:hover,
 .delete:focus {
   background: #630101;
+  cursor: pointer;
 }
 
 .todo-form {
@@ -305,8 +322,18 @@ li a:focus {
   align-items: center;
 }
 
+.todo-form button {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .todo-form input {
   width: 30rem;
+  margin: 0 1rem;
+  padding: 0.3rem 0.2rem;
+  border: none;
+  border-bottom: 1px solid black;
 }
 
 @media (prefers-reduced-motion: no-preference) {
