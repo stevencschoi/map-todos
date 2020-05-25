@@ -9,13 +9,16 @@ export default function Todo(props) {
   const [text, setText] = useState(props.text);
   const [isComplete, setIsComplete] = useState(props.isComplete);
 
-  const deleteTodo = i => {
+
+  const deleteTodo = () => {
     const todoId = props.id
     const user_id = Cookies.get("userId");
     axios
       .delete(`http://localhost:4000/todos/delete?user_id=${user_id}&todoId=${todoId}`)
       .then(res => {
         console.log(res);
+        console.log("here");
+        props.reRender()
       })
       .catch(error => console.error(error));
     // console.log("delete");
@@ -25,11 +28,11 @@ export default function Todo(props) {
     isComplete ? setIsComplete(false) : setIsComplete(true)
     // console.log("isComplete", isComplete);
     const todoId = props.id
-    axios.put(`http://localhost:4000/todos/update`, {todoId, isComplete})
-    .then(res => {
-      console.log(res);
-    })
-    .catch(error => console.error(error));
+    axios.put(`http://localhost:4000/todos/update`, { todoId, isComplete })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.error(error));
   };
 
   const handleEdit = () => {
@@ -40,7 +43,7 @@ export default function Todo(props) {
     const todoId = props.id
     const todoText = text
     axios
-      .put(`http://localhost:4000/todos/edit`, {todoId, todoText})
+      .put(`http://localhost:4000/todos/edit`, { todoId, todoText })
       .then(res => {
         console.log(res);
       })
@@ -52,7 +55,7 @@ export default function Todo(props) {
     <li>
       <div className="todo">
         <input type="checkbox" name="isComplete" onChange={toggleComplete}
-        checked={isComplete} />
+          checked={isComplete} />
         {!isedit ? <p>{props.text}</p> :
           <input
             type="text"
