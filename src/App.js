@@ -21,7 +21,7 @@ export default function App() {
       .get(`http://localhost:4000/todos?user_id=${user_id}`)
       .then(res => {
         const todos = res.data.map((todo) => {
-          return <Todo key={todo._id} id={todo._id} text={todo.text} />;
+          return <Todo key={todo._id} id={todo._id} text={todo.text} isComplete={todo.isComplete}/>;
         });
         setData(todos)
       })

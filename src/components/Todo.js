@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+// import { set } from "mongoose";
 
 export default function Todo(props) {
 
   const [isedit, setIsedit] = useState(false);
   const [text, setText] = useState(props.text);
+  const [isComplete, setIsComplete] = useState(props.isComplete);
 
   const deleteTodo = i => {
     const todoId = props.id
@@ -19,9 +21,15 @@ export default function Todo(props) {
     // console.log("delete");
   };
 
-  const toggleComplete = i => {
-    // todo[i].isComplete = !todo[i].isComplete
-    console.log("toggle complete");
+  const toggleComplete = () => {
+    isComplete ? setIsComplete(false) : setIsComplete(true)
+    // console.log("isComplete", isComplete);
+    const todoId = props.id
+    axios.put(`http://localhost:4000/todos/update`, {todoId, isComplete})
+    .then(res => {
+      console.log(res);
+    })
+    .catch(error => console.error(error));
   };
 
   const handleEdit = () => {
@@ -37,15 +45,14 @@ export default function Todo(props) {
         console.log(res);
       })
       .catch(error => console.error(error));
-    // console.log("THISS ID", props.id)
-    // console.log("THISS", text)
     setIsedit(false)
   }
 
   return (
     <li>
       <div className="todo">
-        <input type="checkbox" name="isComplete" onChange={toggleComplete} />
+        <input type="checkbox" name="isComplete" onChange={toggleComplete}
+        checked={isComplete} />
         {!isedit ? <p>{props.text}</p> :
           <input
             type="text"
