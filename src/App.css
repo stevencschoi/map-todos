@@ -304,6 +304,11 @@ li a:focus {
   width: 70%;
 }
 
+.todo button {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
 .delete {
   background-color: #b80c0c;
   padding: 0.5rem 1rem;
