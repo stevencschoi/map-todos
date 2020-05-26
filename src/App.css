@@ -296,12 +296,21 @@ li a:focus {
   align-items: center;
 }
 
-.todo input {
+/* .todo input {
   width: 1rem;
-}
+} */
 
 .todo p {
   width: 70%;
+}
+
+.input-change {
+  width: 69%;
+}
+
+.todo button {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
 }
 
 .delete {

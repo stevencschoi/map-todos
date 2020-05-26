@@ -62,6 +62,7 @@ export default function Todo(props) {
           <p>{props.text}</p>
         ) : (
           <input
+            className="input-change"
             type="text"
             name="text"
             value={text}
