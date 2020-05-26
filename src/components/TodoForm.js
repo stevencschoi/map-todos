@@ -16,8 +16,9 @@ export default function TodoForm(props) {
     axios
       .post(`http://localhost:4000/todos`, { user_id, text })
       .then(res => {
+        console.log(res.data);
         console.log("Pushed");
-        props.reRender()
+        props.reRender();
       })
       .catch(error => console.log(error));
     clearText();

@@ -97,30 +97,38 @@ router.post("/todos", (req, res, next) => {
     if (error) {
       return next(error);
     }
-    return todo;
+    res.json(todo);
   });
 });
 
 // PUT request to edit todo
 router.put("/todos/edit", (req, res, next) => {
-  const todoData = { _id: req.body.todoId, text: req.body.todoText }
-  Todo.updateOne({ _id: todoData._id }, {$set: {text: todoData.text}}, function (error, todo) {
-    if (error) {
-      return next(error);
+  const todoData = { _id: req.body.todoId, text: req.body.todoText };
+  Todo.updateOne(
+    { _id: todoData._id },
+    { $set: { text: todoData.text } },
+    function (error, todo) {
+      if (error) {
+        return next(error);
+      }
+      res.json(todo);
     }
-    return todo;
-  });
+  );
 });
 
 // PUT request to update todo
 router.put("/todos/update", (req, res, next) => {
-  const todoData = { _id: req.body.todoId, isComplete: !req.body.isComplete }
-  Todo.updateOne({ _id: todoData._id }, {$set: {isComplete: todoData.isComplete}}, function (error, todo) {
-    if (error) {
-      return next(error);
+  const todoData = { _id: req.body.todoId, isComplete: !req.body.isComplete };
+  Todo.updateOne(
+    { _id: todoData._id },
+    { $set: { isComplete: todoData.isComplete } },
+    function (error, todo) {
+      if (error) {
+        return next(error);
+      }
+      res.json(todo);
     }
-    return todo;
-  });
+  );
 });
 
 // DELETE request to delete todo
@@ -129,13 +137,13 @@ router.delete("/todos/delete", (req, res) => {
   const data = { user_id: req.query.user_id, todoId: req.query.todoId };
   // console.log(todoId)
   // Todo.deleteOne({ "user_id": user_id }, { "_id": todoId })
-  Todo.findOneAndDelete({ "_id": todoId }, function (error, todo) {
+  Todo.findOneAndDelete({ _id: todoId }, function (error, todo) {
     if (error) {
       return next(error);
     }
-    return todo;
+    res.json(todo);
   });
-  console.log("deleted")
+  console.log("deleted");
 });
 
 module.exports = router;
